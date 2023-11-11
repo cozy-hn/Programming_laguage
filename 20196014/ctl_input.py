@@ -10,13 +10,22 @@ def ctl_input():
     parser.add_argument('filename', nargs='*', type=str, help='Only txt file')
     args = parser.parse_args()
     if len(sys.argv) == 1 or (len(sys.argv) == 2 and args.v):
-        print("Error : 텍스트 파일이 입력되지 않았습니다.")
-        print("프로그램이 종료됩니다.")
+        print("Error : 텍스트 파일이 입력되지 않았습니다")
+        print("프로그램이 종료됩니다")
         sys.exit()
     if len(sys.argv) > 3 or (len(sys.argv) == 3 and not args.v):
-        print("Waring : 첫번째 텍스트 파일만 사용됩니다.")
+        print("Waring : 첫번째 텍스트 파일만 사용됩니다")
+    print("\n"+"#" * 25)
     if args.v:
-        print("option (b)를 실행합니다.")
+        print("#option (b)를 실행합니다#")
     else:
-        print("option (a)를 실행합니다.")
-    print("LL Parser를 실행합니다.")
+        print("#option (a)를 실행합니다#")
+    print("# LL Parser를 실행합니다#")
+    print("#" * 25+"\n")
+    try:
+        with open(args.filename[0], 'r') as file:
+            content = file.read()
+            print(content)
+    except FileNotFoundError:
+        print(f"The file {args.filename[0]} does not exist")
+        sys.exit(1)
