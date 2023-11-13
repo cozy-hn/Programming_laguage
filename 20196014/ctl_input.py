@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import argparse
 import sys
     
@@ -25,7 +26,7 @@ def ctl_input():
     try:
         with open(args.filename[0], 'r') as file:
             content = file.read()
-            print(content)
+            return content
     except FileNotFoundError:
         print(f"The file {args.filename[0]} does not exist")
         sys.exit(1)
