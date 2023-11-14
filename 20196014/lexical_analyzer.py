@@ -1,4 +1,4 @@
-from token import TokenTypes
+from token import TokenType
 class Lexical_Analyzer:
 	def __init__(self,text) -> None: 
 		self.next_token = None# 다음 토큰
@@ -16,34 +16,35 @@ class Lexical_Analyzer:
 		now = self.full_txt[self.idx]
 		self.token_string = now
 		if now == '+' or now == '-':
-			self.next_token = TokenTypes.ADD_OP
+			self.next_token = TokenType.ADD_OP
 		elif now == '*' or now == '/':
-			self.next_token = TokenTypes.MULT_OP
+			self.next_token = TokenType.MULT_OP
 		elif now == '(':
-			self.next_token = TokenTypes.LEFT_PAREN
+			self.next_token = TokenType.LEFT_PAREN
 		elif now == ')':
-			self.next_token = TokenTypes.RIGHT_PAREN
+			self.next_token = TokenType.RIGHT_PAREN
 		elif now == ';':
-			self.next_token = TokenTypes.SEMI_COLON
+			self.next_token = TokenType.SEMI_COLON
 		elif now == ':':
 			if self.full_txt[self.idx+1] == '=':
 				self.token_string += '='
 				self.idx += 1
+				self.next_token = TokenType.ASSIGNMENT_OP
 		elif now == '\0':
-			self.next_token = TokenTypes.EOF
+			self.next_token = TokenType.EOF
 		elif now.isdigit():
 			while self.full_txt[self.idx+1].isdigit():
 				self.token_string += self.full_txt[self.idx+1]
 				self.idx += 1
-			self.next_token = TokenTypes.CONST
+			self.next_token = TokenType.CONST
 		elif now.isalpha() or now == '_':
 			while self.full_txt[self.idx+1].isalnum() or self.full_txt[self.idx+1] == '_':
 				self.token_string += self.full_txt[self.idx+1]
 				self.idx += 1
-			self.next_token = TokenTypes.IDENT
+			self.next_token = TokenType.IDENT
 		else:
-			self.next_token = TokenTypes.UNDEFINED
+			self.next_token = TokenType.UNDEFINED
 		self.idx += 1
-		if self.next_token == TokenTypes.UNDEFINED:
+		if self.next_token == TokenType.UNDEFINED:
 			self.lexical()
 			
