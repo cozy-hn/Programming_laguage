@@ -16,6 +16,12 @@ def ctl_input():
         sys.exit()
     if len(sys.argv) > 3 or (len(sys.argv) == 3 and not args.v):
         print("Waring : 인자가 여러개 입니다. 첫번째 텍스트 파일만 사용됩니다.")
+    try:
+        with open(args.filename[0], 'r') as file:
+            content = file.read()
+    except FileNotFoundError:
+        print(f"Error : 파일 {args.filename[0]}이 존재하지 않습니다.")
+        sys.exit(1)
     print("\n"+"#" * 27)
     print("#  LL Parser를 실행합니다 #")
     if args.v:
@@ -23,10 +29,4 @@ def ctl_input():
     else:
         print("# option (a)를 실행합니다 #")
     print("#" * 27+"\n")
-    try:
-        with open(args.filename[0], 'r') as file:
-            content = file.read()
-            return content
-    except FileNotFoundError:
-        print(f"The file {args.filename[0]} does not exist")
-        sys.exit(1)
+    return content
