@@ -22,7 +22,7 @@ class FT_Parser():
     def __init__(self, text) -> None:
         self.lexer = Lexical_Analyzer(text)
         self.ident_table, self.ident_dict = list(), dict()
-        self.info = dict()
+        self.info = {"ident_num": 0, "const_num": 0, "operator_num": 0, "assign_num": 0, "left_paren_num": 0, "right_paren_num": 0}
         self.cal_stack = list()
 
     def start(self):
@@ -59,7 +59,7 @@ class FT_Parser():
                 self.print_token()
                 self.lexer.lexical()
                 self.expression()
-                # self.ident_dict[LHS] = self.cal_stack.pop()
+                self.ident_dict[LHS] = self.cal_stack.pop()
             
     def expression(self):
         self.term()
@@ -69,8 +69,10 @@ class FT_Parser():
         if self.lexer.next_token == TokenType.ADD_OP:
             self.info["operator_num"] += 1
             self.print_token()
+            now_op = self.lexer.token_string
             self.lexer.lexical()
             self.term()
+            self.calculate(now_op)
             self.term_tail()
         
     def term(self):
@@ -79,24 +81,33 @@ class FT_Parser():
 
     def factor_tail(self):
         if self.lexer.next_token == TokenType.MULT_OP:
+            self.info["operator_num"] += 1
             self.print_token()
+            now_op = self.lexer.token_string
             self.lexer.lexical()
             self.factor()
+            self.calculate(now_op)
             self.factor_tail()
     
     def factor(self):
         if self.lexer.next_token == TokenType.LEFT_PAREN:
+            self.info["left_paren_num"] += 1
             self.print_token()
             self.lexer.lexical()
             self.expression()
             if self.lexer.next_token == TokenType.RIGHT_PAREN:
+                self.info["right_paren_num"] += 1
                 self.print_token()
                 self.lexer.lexical()
         elif self.lexer.next_token == TokenType.IDENT:
+            self.info["ident_num"] += 1
             self.print_token()
+            self.cal_stack.append(self.ident_dict[self.lexer.token_string])
             self.lexer.lexical()
         elif self.lexer.next_token == TokenType.CONST:
+            self.info["const_num"] += 1
             self.print_token()
+            self.cal_stack.append(self.lexer.token_string)
             self.lexer.lexical()
         else:
             self.lexer.lexical()
@@ -118,8 +129,11 @@ class FT_Parser():
             print(f"{self.lexer.token_string} ", end="")
     
     def reset_info(self):
-        self.info = {"ident_num": 0, "const_num": 0, "operator_num": 0, "assign_num": 0, "left_paren_num": 0, "right_paren_num": 0}
+        self.info["ident_num"]=self.info["const_num"]=self.info["operator_num"]=self.info["assign_num"]=self.info["left_paren_num"]=self.info["right_paren_num"]=0
         self.cal_stack = list()
     
     def print_info(self):
         print(f"ID: {self.info['ident_num']}; CONST: {self.info['const_num']}; OP: {self.info['operator_num']};")
+    
+    def calculate(self, now_op):
+        self.cal_stack.append(eval(f"{int(self.cal_stack.pop())}{now_op}{int(self.cal_stack.pop())}"))
