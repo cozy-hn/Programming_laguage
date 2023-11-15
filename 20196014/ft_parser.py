@@ -15,22 +15,28 @@
 # <left_paren> → (
 # <right_paren> → )
 
+import sys
 from lexical_analyzer import Lexical_Analyzer
 from token import TokenType
+from ctl_error import Error_controller
+from ctl_input import ctl_input
 
-class FT_Parser():
-    def __init__(self, text) -> None:
-        self.lexer = Lexical_Analyzer(text)
+class FT_Parser:
+    def __init__(self) -> None:
+        self.lexer = None
         self.ident_table, self.ident_dict = list(), dict()
         self.info = {"ident_num": 0, "const_num": 0, "operator_num": 0, "assign_num": 0, "left_paren_num": 0, "right_paren_num": 0}
+        self.error = Error_controller()
         self.cal_stack = list()
 
     def start(self):
+        content = ctl_input() +"\0"
+        self.lexer = Lexical_Analyzer(content)
         self.program()
         if self.lexer.next_token != TokenType.EOF:
             print("Error : EOF가 아닌 토큰이 남아있습니다")
             print("프로그램이 종료됩니다")
-            exit(1)
+            sys.exit(1)
         
     def program(self):
         self.lexer.lexical()
@@ -42,6 +48,7 @@ class FT_Parser():
         self.statement()
         self.print_token()
         self.print_info()
+        self.error.print_error()
         if self.lexer.next_token == TokenType.SEMI_COLON:
             self.lexer.lexical()
             self.statements()
