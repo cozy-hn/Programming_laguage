@@ -1,0 +1,2 @@
+operand1 := 21 / 0 + 1;
+operand2 := 2 / operand1

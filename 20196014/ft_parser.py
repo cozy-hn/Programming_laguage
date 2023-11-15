@@ -54,6 +54,9 @@ class FT_Parser:
             self.statements()
     
     def statement(self):
+        while self.lexer.next_token != TokenType.IDENT and self.lexer.next_token != TokenType.EOF and self.lexer.next_token != TokenType.SEMI_COLON:
+            self.error.add_warning(f"예상 TokenType.IDENT, 현재 {self.lexer.next_token} => {self.lexer.token_string} 생략")
+            self.lexer.lexical()
         if self.lexer.next_token == TokenType.IDENT:
             LHS = self.lexer.token_string
             self.info["ident_num"] += 1
@@ -61,12 +64,23 @@ class FT_Parser:
             self.ident_table.append(LHS)
             self.ident_dict[LHS] = "Unknown"
             self.lexer.lexical()
+            while self.lexer.next_token != TokenType.ASSIGNMENT_OP and self.lexer.next_token != TokenType.EOF and self.lexer.next_token != TokenType.SEMI_COLON:
+                self.error.add_warning(f"예상 TokenType.ASSIGNMENT_OP, 현재 {self.lexer.next_token} => {self.lexer.token_string} 생략")
+                self.lexer.lexical()
             if self.lexer.next_token == TokenType.ASSIGNMENT_OP:
                 self.info["assign_num"] += 1
                 self.print_token()
                 self.lexer.lexical()
+                while self.lexer.next_token == TokenType.ASSIGNMENT_OP:
+                    self.error.add_warning(f"중복된 ASSIGNMENT_OP => {self.lexer.token_string} 생략")
+                    self.lexer.lexical()
                 self.expression()
                 self.ident_dict[LHS] = self.cal_stack.pop()
+            else:
+                self.error.add_error("Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다")
+        else:
+            self.error.add_error("Error : IDENT가 없어 문법에 맞지 않습니다")
+
             
     def expression(self):
         self.term()
@@ -78,6 +92,7 @@ class FT_Parser:
             self.print_token()
             now_op = self.lexer.token_string
             self.lexer.lexical()
+            
             self.term()
             self.calculate(now_op)
             self.term_tail()
@@ -109,6 +124,10 @@ class FT_Parser:
         elif self.lexer.next_token == TokenType.IDENT:
             self.info["ident_num"] += 1
             self.print_token()
+            if self.ident_dict.get(self.lexer.token_string) is None:
+                self.ident_table.append(self.lexer.token_string)
+                self.ident_dict[self.lexer.token_string] = "Unknown"
+                self.error.add_error(f'"정의되지 않은 변수({self.lexer.token_string})가 참조됨"')
             self.cal_stack.append(self.ident_dict[self.lexer.token_string])
             self.lexer.lexical()
         elif self.lexer.next_token == TokenType.CONST:
@@ -121,6 +140,9 @@ class FT_Parser:
     
     def print_result(self):
         print("Result ==> ", end="")
+        if not self.ident_table:
+            print("None")
+        self.ident_table.sort()
         for i in self.ident_table[:-1]:
             print(f"{i}: {self.ident_dict[i]}; ", end="")
         if self.ident_table:
@@ -143,4 +165,12 @@ class FT_Parser:
         print(f"ID: {self.info['ident_num']}; CONST: {self.info['const_num']}; OP: {self.info['operator_num']};")
     
     def calculate(self, now_op):
-        self.cal_stack.append(eval(f"{int(self.cal_stack.pop())}{now_op}{int(self.cal_stack.pop())}"))
+        a,b=self.cal_stack.pop(),self.cal_stack.pop()
+        if a=='Unknown' or b=='Unknown':
+            self.cal_stack.append('Unknown')
+        else:
+            if int(a)==0 and now_op=='/':
+                self.error.add_error(f'"0으로 나누기 연산이 있음 결과 => \"Unknown\""')
+                self.cal_stack.append('Unknown')
+            else:
+                self.cal_stack.append(eval(f"{int(b)}{now_op}{int(a)}"))
