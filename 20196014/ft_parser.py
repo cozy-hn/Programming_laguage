@@ -21,9 +21,10 @@ from token import TokenType
 class FT_Parser():
     def __init__(self, text) -> None:
         self.lexer = Lexical_Analyzer(text)
-        self.ident_table = []
-        self.ident_dict = {}
-    
+        self.ident_table, self.ident_dict = list(), dict()
+        self.info = dict()
+        self.cal_stack = list()
+
     def start(self):
         self.program()
         if self.lexer.next_token != TokenType.EOF:
@@ -37,22 +38,28 @@ class FT_Parser():
         self.print_result()
         
     def statements(self):
+        self.reset_info()
         self.statement()
         self.print_token()
+        self.print_info()
         if self.lexer.next_token == TokenType.SEMI_COLON:
             self.lexer.lexical()
             self.statements()
     
     def statement(self):
         if self.lexer.next_token == TokenType.IDENT:
+            LHS = self.lexer.token_string
+            self.info["ident_num"] += 1
             self.print_token()
-            self.ident_table.append(self.lexer.token_string)
-            self.ident_dict[self.lexer.token_string] = "Unknown"
+            self.ident_table.append(LHS)
+            self.ident_dict[LHS] = "Unknown"
             self.lexer.lexical()
             if self.lexer.next_token == TokenType.ASSIGNMENT_OP:
+                self.info["assign_num"] += 1
                 self.print_token()
                 self.lexer.lexical()
                 self.expression()
+                # self.ident_dict[LHS] = self.cal_stack.pop()
             
     def expression(self):
         self.term()
@@ -60,6 +67,7 @@ class FT_Parser():
     
     def term_tail(self):
         if self.lexer.next_token == TokenType.ADD_OP:
+            self.info["operator_num"] += 1
             self.print_token()
             self.lexer.lexical()
             self.term()
@@ -108,3 +116,10 @@ class FT_Parser():
             print("\b; ")
         else:
             print(f"{self.lexer.token_string} ", end="")
+    
+    def reset_info(self):
+        self.info = {"ident_num": 0, "const_num": 0, "operator_num": 0, "assign_num": 0, "left_paren_num": 0, "right_paren_num": 0}
+        self.cal_stack = list()
+    
+    def print_info(self):
+        print(f"ID: {self.info['ident_num']}; CONST: {self.info['const_num']}; OP: {self.info['operator_num']};")
