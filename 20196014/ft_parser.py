@@ -46,6 +46,9 @@ class FT_Parser:
     def statements(self):
         self.reset_info()
         self.statement()
+        while self.lexer.next_token != TokenType.EOF and self.lexer.next_token != TokenType.SEMI_COLON:
+            self.error.add_warning(f"예상 TokenType.SEMI_COLON, TokenType.EOF, 현재 {self.lexer.next_token} => {self.lexer.token_string} 생략")
+            self.lexer.lexical()
         self.print_token()
         self.print_info()
         self.error.print_error()

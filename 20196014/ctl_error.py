@@ -14,13 +14,13 @@ class Error_controller:
     def print_error(self):
         if self.warnings or self.errors:
             for i in self.warnings:
-                print(f"(Warning): {i}")
+                print(f"\033[93m(Warning): {i}\033[0m")
             for i in self.errors:
-                print(f"(Error): {i}")
+                print(f"\033[91m(Error): {i}\033[0m")
             self.warnings.clear()
             self.errors.clear()
         else:
-            print("(OK)")
+            print("\033[92m(OK)\033[0m")
 
     
     def add_error(self, error):
