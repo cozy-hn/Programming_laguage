@@ -69,7 +69,7 @@ class Lexical_Analyzer:
 			self.next_token = TokenType.UNDEFINED
 		self.idx += 1
 		if self.next_token == TokenType.UNDEFINED:
-			self.error.add_warning(f"Undefined token: '{self.full_txt[self.idx+1]}'가 제거되었습니다.")
+			self.error.add_warning(f"Undefined token: '{self.full_txt[self.idx-1]}'가 제거되었습니다.")
 			self.lexical()
    
 	def erase_unused_char(self) -> None:
