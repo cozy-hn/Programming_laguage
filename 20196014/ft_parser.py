@@ -25,7 +25,7 @@ class FT_Parser:
     def __init__(self) -> None:
         self.lexer = None
         self.ident_table, self.ident_dict = list(), dict()
-        self.info = {"ident_num": 0, "const_num": 0, "operator_num": 0, "assign_num": 0, "left_paren_num": 0, "right_paren_num": 0}
+        self.info = {"ident_num": 0, "const_num": 0, "operator_num": 0, "left_paren_num": 0, "right_paren_num": 0}
         self.error = Error_controller()
         self.cal_stack = list()
 
@@ -72,7 +72,6 @@ class FT_Parser:
                 self.error.add_warning(f"예상 TokenType.ASSIGNMENT_OP, 현재 {self.lexer.next_token} => {self.lexer.token_string} 생략")
                 self.lexer.lexical()
             if self.lexer.next_token == TokenType.ASSIGNMENT_OP:
-                self.info["assign_num"] += 1
                 self.print_token()
                 self.lexer.lexical()
                 while self.lexer.next_token != TokenType.IDENT and self.lexer.next_token != TokenType.CONST \
@@ -83,7 +82,8 @@ class FT_Parser:
                         self.error.add_warning(f"예상 TokenType.IDENT, TokenType.CONST, TokenType.LEFT_PAREN, 현재 {self.lexer.next_token} => {self.lexer.token_string} 생략")
                     self.lexer.lexical()
                 self.expression()
-                self.ident_dict[LHS] = self.cal_stack.pop()
+                if self.cal_stack:
+                    self.ident_dict[LHS] = self.cal_stack.pop()
             else:
                 self.error.add_error("Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다")
         else:
@@ -196,8 +196,8 @@ class FT_Parser:
             print(f"{self.lexer.token_string} ", end="")
     
     def reset_info(self):
-        self.info["ident_num"]=self.info["const_num"]=self.info["operator_num"]=self.info["assign_num"]=self.info["left_paren_num"]=self.info["right_paren_num"]=0
-        self.cal_stack = list()
+        self.info["ident_num"]=self.info["const_num"]=self.info["operator_num"]=self.info["left_paren_num"]=self.info["right_paren_num"]=0
+        self.cal_stack.clear()
     
     def print_info(self):
         print(f"ID: {self.info['ident_num']}; CONST: {self.info['const_num']}; OP: {self.info['operator_num']};")

@@ -1,3 +1,2 @@
-op%^er$@and1 := 3;
-op@era#n%d2 := op^^er^^and1 + 2;
-tar^^$#%get := (o^pe^rand^1 + operand2)^ *2
+operand1 := 2 + 3) * 2;
+operand2 := operand1) ))+ ((2))))
