@@ -120,6 +120,9 @@ class FT_Parser:
         self.factor_tail()
 
     def factor_tail(self):
+        while self.lexer.next_token == TokenType.RIGHT_PAREN and self.info["left_paren_num"] <= self.info["right_paren_num"]:
+            self.error.add_warning(f" ')'가 불필요하게 나옴 => {self.lexer.token_string} 생략")
+            self.lexer.lexical()
         if self.lexer.next_token == TokenType.MULT_OP:
             self.info["operator_num"] += 1
             self.print_token()
@@ -173,8 +176,9 @@ class FT_Parser:
             self.cal_stack.append(self.lexer.token_string)
             self.lexer.lexical()
         else:
-            self.error.add_error("Error : IDENT, CONST, LEFT_PAREN이 없어 문법에 맞지 않습니다")
-            self.lexer.lexical()
+            self.error.add_error("Error : 연산이 완료되지 않았습니다")
+            self.cal_stack.append('Unknown')
+            
     
     def print_result(self):
         print("Result ==> ", end="")
