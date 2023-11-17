@@ -19,7 +19,7 @@ import sys
 from lexical_analyzer import Lexical_Analyzer
 from token import TokenType
 from ctl_error import Error_controller
-from ctl_input import ctl_input
+from ctl_input import ctl_input, print_f, print_t
 
 class FT_Parser:
     def __init__(self) -> None:
@@ -30,11 +30,11 @@ class FT_Parser:
         self.cal_stack = list()
 
     def start(self):
-        content = ctl_input() +"\0"
+        content = ctl_input() + '\0'
         self.lexer = Lexical_Analyzer(content)
         self.program()
         if self.lexer.next_token != TokenType.EOF:
-            print("Error : EOF가 아닌 토큰이 남아있습니다")
+            print("치명적 오류 EOF가 아닌 토큰이 남아있습니다")
             print("프로그램이 종료됩니다")
             sys.exit(1)
         
@@ -52,6 +52,7 @@ class FT_Parser:
         self.print_token()
         self.print_info()
         self.error.print_error()
+        self.print_v_op()
         if self.lexer.next_token == TokenType.SEMI_COLON:
             self.lexer.lexical()
             self.statements()
@@ -61,6 +62,7 @@ class FT_Parser:
             self.error.add_warning(f"예상 TokenType.IDENT, 현재 {self.lexer.next_token} => {self.lexer.token_string} 생략")
             self.lexer.lexical()
         if self.lexer.next_token == TokenType.IDENT:
+            self.print_v_op()
             LHS = self.lexer.token_string
             self.info["ident_num"] += 1
             self.print_token()
@@ -72,10 +74,10 @@ class FT_Parser:
                 self.error.add_warning(f"예상 TokenType.ASSIGNMENT_OP, 현재 {self.lexer.next_token} => {self.lexer.token_string} 생략")
                 self.lexer.lexical()
             if self.lexer.next_token == TokenType.ASSIGNMENT_OP:
+                self.print_v_op()
                 self.print_token()
                 self.lexer.lexical()
-                while self.lexer.next_token != TokenType.IDENT and self.lexer.next_token != TokenType.CONST \
-                    and self.lexer.next_token != TokenType.LEFT_PAREN and self.lexer.next_token != TokenType.EOF and self.lexer.next_token != TokenType.SEMI_COLON:
+                while self.is_error():
                     if self.lexer.next_token == TokenType.ASSIGNMENT_OP:
                         self.error.add_warning(f"중복된 ASSIGNMENT_OP => {self.lexer.token_string} 생략")
                     else:
@@ -91,8 +93,7 @@ class FT_Parser:
 
             
     def expression(self):
-        while self.lexer.next_token != TokenType.IDENT and self.lexer.next_token != TokenType.CONST \
-            and self.lexer.next_token != TokenType.LEFT_PAREN and self.lexer.next_token != TokenType.EOF and self.lexer.next_token != TokenType.SEMI_COLON:
+        while self.is_error():
             self.error.add_warning(f"예상 TokenType.IDENT, TokenType.CONST, TokenType.LEFT_PAREN, 현재 {self.lexer.next_token} => {self.lexer.token_string} 생략")
             self.lexer.lexical()
         self.term()
@@ -100,12 +101,12 @@ class FT_Parser:
     
     def term_tail(self):
         if self.lexer.next_token == TokenType.ADD_OP:
+            self.print_v_op()
             self.info["operator_num"] += 1
             self.print_token()
             now_op = self.lexer.token_string
             self.lexer.lexical()
-            while self.lexer.next_token != TokenType.IDENT and self.lexer.next_token != TokenType.CONST \
-                and self.lexer.next_token != TokenType.LEFT_PAREN and self.lexer.next_token != TokenType.EOF and self.lexer.next_token != TokenType.SEMI_COLON:
+            while self.is_error():
                 if self.lexer.next_token == TokenType.ADD_OP:
                     self.error.add_warning(f"중복된 ADD_OP => {self.lexer.token_string} 생략")
                 else:
@@ -124,12 +125,12 @@ class FT_Parser:
             self.error.add_warning(f" ')'가 불필요하게 나옴 => {self.lexer.token_string} 생략")
             self.lexer.lexical()
         if self.lexer.next_token == TokenType.MULT_OP:
+            self.print_v_op()
             self.info["operator_num"] += 1
             self.print_token()
             now_op = self.lexer.token_string
             self.lexer.lexical()
-            while self.lexer.next_token != TokenType.IDENT and self.lexer.next_token != TokenType.CONST \
-                and self.lexer.next_token != TokenType.LEFT_PAREN and self.lexer.next_token != TokenType.EOF and self.lexer.next_token != TokenType.SEMI_COLON:
+            while self.is_error():
                 if self.lexer.next_token == TokenType.MULT_OP:
                     self.error.add_warning(f"중복된 MULT_OP => {self.lexer.token_string} 생략")
                 else:
@@ -140,11 +141,11 @@ class FT_Parser:
             self.factor_tail()
     
     def factor(self):
-        while self.lexer.next_token != TokenType.IDENT and self.lexer.next_token != TokenType.CONST \
-            and self.lexer.next_token != TokenType.LEFT_PAREN and self.lexer.next_token != TokenType.EOF and self.lexer.next_token != TokenType.SEMI_COLON:
+        while self.is_error():
             self.error.add_warning(f"예상 TokenType.IDENT, TokenType.CONST, TokenType.LEFT_PAREN, 현재 {self.lexer.next_token} => {self.lexer.token_string} 생략")
             self.lexer.lexical()
         if self.lexer.next_token == TokenType.LEFT_PAREN:
+            self.print_v_op()
             self.info["left_paren_num"] += 1
             self.print_token()
             self.lexer.lexical()
@@ -153,15 +154,20 @@ class FT_Parser:
                 self.error.add_warning(f"예상 TokenType.RIGHT_PAREN, 현재 {self.lexer.next_token} => {self.lexer.token_string} 생략")
                 self.lexer.lexical()
             if self.lexer.next_token == TokenType.RIGHT_PAREN:
+                self.print_v_op()
                 self.info["right_paren_num"] += 1
                 self.print_token()
                 self.lexer.lexical()
             else:
                 while self.info["left_paren_num"] > self.info["right_paren_num"]:
                     self.info["right_paren_num"] += 1
-                    self.error.add_warning(f"RIGHT_PAREN이 없어 문법에 맞지 않습니다, RIGHT_PAREN 추가")
-                    print(") ", end="")
+                    self.error.add_warning(f"RIGHT_PAREN이 없어 문법에 맞지 않습니다, ')' 추가")
+                    tmp,tmp2 = self.lexer.token_string, self.lexer.next_token
+                    self.lexer.token_string, self.lexer.next_token = ')',TokenType.RIGHT_PAREN
+                    self.print_token()
+                    self.lexer.token_string, self.lexer.next_token = tmp, tmp2
         elif self.lexer.next_token == TokenType.IDENT:
+            self.print_v_op()
             self.info["ident_num"] += 1
             self.print_token()
             if self.ident_dict.get(self.lexer.token_string) is None:
@@ -171,6 +177,7 @@ class FT_Parser:
             self.cal_stack.append(self.ident_dict[self.lexer.token_string])
             self.lexer.lexical()
         elif self.lexer.next_token == TokenType.CONST:
+            self.print_v_op()
             self.info["const_num"] += 1
             self.print_token()
             self.cal_stack.append(self.lexer.token_string)
@@ -181,30 +188,39 @@ class FT_Parser:
             
     
     def print_result(self):
-        print("Result ==> ", end="")
-        if not self.ident_table:
-            print("None")
-        self.ident_table.sort()
-        for i in self.ident_table[:-1]:
-            print(f"{i}: {self.ident_dict[i]}; ", end="")
-        if self.ident_table:
-            last = self.ident_table[-1]
-            print(f"{last}: {self.ident_dict[last]}")
-    
+            print_f("Result ==> ", end="")
+            if not self.ident_table:
+                print_f("None")
+            self.ident_table.sort()
+            for i in self.ident_table[:-1]:
+                print_f(f"{i}: {self.ident_dict[i]}; ", end="")
+            if self.ident_table:
+                last = self.ident_table[-1]
+                print_f(f"{last}: {self.ident_dict[last]}")
+                
+    def print_v_op(self):
+        print_t(self.lexer.next_token)
+        if self.lexer.next_token == TokenType.SEMI_COLON:
+            print_t("")
+        
     def print_token(self):
         if self.lexer.next_token == TokenType.EOF:
-            print()
+            print_f("")
         elif self.lexer.next_token == TokenType.SEMI_COLON:
-            print("\b; ")
+            print_f("\b; ")
         else:
-            print(f"{self.lexer.token_string} ", end="")
+            print_f(f"{self.lexer.token_string} ", end="")
+
+    def is_error(self):
+        return self.lexer.next_token != TokenType.IDENT and self.lexer.next_token != TokenType.CONST \
+                and self.lexer.next_token != TokenType.LEFT_PAREN and self.lexer.next_token != TokenType.EOF and self.lexer.next_token != TokenType.SEMI_COLON
     
     def reset_info(self):
         self.info["ident_num"]=self.info["const_num"]=self.info["operator_num"]=self.info["left_paren_num"]=self.info["right_paren_num"]=0
         self.cal_stack.clear()
     
     def print_info(self):
-        print(f"ID: {self.info['ident_num']}; CONST: {self.info['const_num']}; OP: {self.info['operator_num']};")
+        print_f(f"ID: {self.info['ident_num']}; CONST: {self.info['const_num']}; OP: {self.info['operator_num']};")
     
     def calculate(self, now_op):
         a,b=self.cal_stack.pop(),self.cal_stack.pop()

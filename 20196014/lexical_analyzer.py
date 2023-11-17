@@ -1,5 +1,6 @@
 from token import TokenType
 from ctl_error import Error_controller
+
 class Lexical_Analyzer:	
 	def __init__(self,text) -> None: 
 		self.next_token = None# 다음 토큰
