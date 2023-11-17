@@ -56,14 +56,16 @@ class Lexical_Analyzer:
 		elif now.isdigit():
 			while self.full_txt[self.idx+1].isdigit() or self.is_unused_char():
 				self.erase_unused_char()
-				self.token_string += self.full_txt[self.idx+1]
-				self.idx += 1
+				if self.full_txt[self.idx+1].isdigit():
+					self.token_string += self.full_txt[self.idx+1]
+					self.idx += 1
 			self.next_token = TokenType.CONST
 		elif now.isalpha() or now == '_':
 			while self.full_txt[self.idx+1].isalnum() or self.full_txt[self.idx+1] == '_' or self.is_unused_char():
 				self.erase_unused_char()
-				self.token_string += self.full_txt[self.idx+1]
-				self.idx += 1
+				if self.full_txt[self.idx+1].isalnum() or self.full_txt[self.idx+1] == '_':
+					self.token_string += self.full_txt[self.idx+1]
+					self.idx += 1
 			self.next_token = TokenType.IDENT
 		else:
 			self.next_token = TokenType.UNDEFINED
