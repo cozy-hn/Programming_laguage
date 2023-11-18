@@ -35,11 +35,14 @@ def ctl_input():
     except FileNotFoundError:
         print(f"Error : 파일 {args.filename[0]}이 존재하지 않습니다.")
         sys.exit(1)
-    print("\n"+"#" * 27)
-    print("#  LL Parser를 실행합니다 #")
+    except PermissionError:
+        print(f"Error : 파일 {args.filename[0]}에 대한 권한이 없습니다.")
+        sys.exit(1)
+    print("\n"+" " * 10+"#" * 27)
+    print(" " * 10+"#  LL Parser를 실행합니다 #")
     if args.v:
-        print("# option (b)를 실행합니다 #")
+        print(" " * 10+"# option (b)를 실행합니다 #")
     else:
-        print("# option (a)를 실행합니다 #")
-    print("#" * 27+"\n")
+        print(" " * 10+"# option (a)를 실행합니다 #")
+    print(" " * 10+"#" * 27+"\n")
     return content

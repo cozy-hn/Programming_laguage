@@ -1,20 +1,3 @@
-# <program> → <statements>
-# <statements> → <statement> | <statement><semi_colon><statements>
-# <statement> → <ident><assignment_op><expression>
-# <expression> →  <term><term_tail>
-# <term_tail> → <add_op><term><term_tail> | ε
-# <term> → <factor> <factor_tail>
-# <factor_tail> → <mult_op><factor><factor_tail> | ε
-# <factor> → <left_paren><expression><right_paren> | <ident> | <const>
-# <const> → any decimal numbers
-# <ident> → any names conforming to C identifier rules
-# <assignment_op> → :=
-# <semi_colon> → ;
-# <add_operator> → + | -
-# <mult_operator> → * | /
-# <left_paren> → (
-# <right_paren> → )
-
 import sys
 from lexical_analyzer import Lexical_Analyzer
 from token import TokenType
@@ -165,6 +148,7 @@ class FT_Parser:
                     tmp,tmp2 = self.lexer.token_string, self.lexer.next_token
                     self.lexer.token_string, self.lexer.next_token = ')',TokenType.RIGHT_PAREN
                     self.print_token()
+                    self.print_v_op()
                     self.lexer.token_string, self.lexer.next_token = tmp, tmp2
         elif self.lexer.next_token == TokenType.IDENT:
             self.print_v_op()
@@ -176,12 +160,22 @@ class FT_Parser:
                 self.error.add_error(f'"정의되지 않은 변수({self.lexer.token_string})가 참조됨"')
             self.cal_stack.append(self.ident_dict[self.lexer.token_string])
             self.lexer.lexical()
+            while self.lexer.next_token != TokenType.SEMI_COLON and self.lexer.next_token != TokenType.EOF \
+                and self.lexer.next_token != TokenType.MULT_OP and self.lexer.next_token != TokenType.ADD_OP \
+                and self.lexer.next_token != TokenType.RIGHT_PAREN:
+                self.error.add_warning(f"잘못된 토큰 타입, 현재 {self.lexer.next_token} => {self.lexer.token_string} 생략")
+                self.lexer.lexical() 
         elif self.lexer.next_token == TokenType.CONST:
             self.print_v_op()
             self.info["const_num"] += 1
             self.print_token()
             self.cal_stack.append(self.lexer.token_string)
             self.lexer.lexical()
+            while self.lexer.next_token != TokenType.SEMI_COLON and self.lexer.next_token != TokenType.EOF \
+                and self.lexer.next_token != TokenType.MULT_OP and self.lexer.next_token != TokenType.ADD_OP \
+                and self.lexer.next_token != TokenType.RIGHT_PAREN:
+                self.error.add_warning(f"잘못된 토큰 타입 현재 {self.lexer.next_token} => {self.lexer.token_string} 생략")
+                self.lexer.lexical() 
         else:
             self.error.add_error("Error : 연산이 완료되지 않았습니다")
             self.cal_stack.append('Unknown')
@@ -199,7 +193,7 @@ class FT_Parser:
                 print_f(f"{last}: {self.ident_dict[last]}")
                 
     def print_v_op(self):
-        print_t(self.lexer.next_token)
+        print_t(str(self.lexer.next_token)[10:])
         if self.lexer.next_token == TokenType.SEMI_COLON:
             print_t("")
         
