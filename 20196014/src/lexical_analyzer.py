@@ -16,7 +16,8 @@ class Lexical_Analyzer:
 
 	def is_unused_char(self) -> bool:
 		rtn=ord(self.full_txt[self.idx+1])
-		return (33<=rtn<=39 or 44<=rtn<=46 or rtn==60 or 62<=rtn<=64 or 91<=rtn<=94 or rtn==96 or 123<=rtn<=126)
+		return (33<=rtn<=39 or 44==rtn or rtn==46 or rtn==60 or 62<=rtn<=64 \
+      or 91<=rtn<=94 or rtn==96 or 123<=rtn<=126)
 
 	def lexical(self) -> None:
 		while self.is_whitespace() and self.idx < self.textlength:

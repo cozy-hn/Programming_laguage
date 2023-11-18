@@ -115,8 +115,14 @@ python3 ./src/main.py -v ./test/test1.txt
 <img src="./20196014/img/img_4.png" width="500px">
 
 
-**Input**
+#### Input Example & Exception Handling
 
+**입력 #1 파싱 결과 (OK) 시**
+- “프로그램에서 읽은 라인” 
+- “ID: {개수}; CONST: {개수}; OP: {개수};” 
+- “파싱 결과 (OK)” 
+- “Result ==> {변수 1}: {최종값}; {변수 2}: {최종값}; {변수 3}: {결과값}”
+*Result 맨 끝 SEMI_COLON은 예시에 있는 것도 있고 없는 것도 있어서 ;넣지 않음*
 ```
 python3 ./src/main.py ./test/test1.txt
 ```
@@ -126,3 +132,64 @@ operand2 := operand1 + 2 ;
 target := operand1 + operand2 * 3
 ```
 <img src="./20196014/img/img_5.png" width="400px">
+
+**입력 #2 정의되지 않은 변수가 있을 시**
+* 정의되지 않은 변수가 있다고 Error message 출력
+* 정의되지 않은 변수는 unknown으로 처리
+* Error이후 변수는 unknwon으로 정의되었다고 가정 후 에러를 띄우지 않음
+*PDF의 출력과 값 맞춤*
+
+```
+python3 ./src/main.py ./test/test2.txt
+```
+```
+operand2 := operand1 + 2 ; 
+target := operand1 + operand2 * 3
+```
+<img src="./20196014/img/img_8.png" width="400px">
+
+**입력 #3**
+```
+python3 ./src/main.py ./test/test3.txt
+```
+```
+operand1 := 1;
+operand2 := (operand1 * 3) + 2 ; target := operand1 + operand2 * 3
+```
+<img src="./20196014/img/img_9.png" width="400px">
+
+**입력 #4 예외처리_1**
+* 연산자 중복시 Warning message 출력 후 무시
+```
+python3 ./src/main.py ./test/test4.txt
+```
+```
+operand1 := 3 ;
+operand2 := operand1 + + 2 ; target := operand1 + operand2 * 3
+```
+<img src="./20196014/img/img_10.png" width="400px">
+
+**입력 #5 예외처리_2**
+* 사용하지 않은 특수문자가 있을 시 warning message 출력 후 무시
+```
+python3 ./src/main.py ./test/test5.txt
+```
+```
+ope#`rand1 := 3 ;
+operand2 := opera^@^nd1 + 2 ;
+target := operand1&$
+```
+<img src="./20196014/img/img_11.png" width="400px">
+
+**입력 #6 예외처리_3**
+* 연산이 완료되지 않았을 경우 Error message 출력 후 unknown으로 할당
+```
+python3 ./src/main.py ./test/test6.txt
+```
+```
+operand1 := ;
+operand2 := operand1 + - ;
+target := operand1 + operand2 *
+```
+<img src="./20196014/img/img_12.png" width="400px">
+
