@@ -115,4 +115,4 @@ operand1 := 3 ;
 operand2 := operand1 + 2 ;
 target := operand1 + operand2 * 3
 ```
-![test_1](./20196014/img/img_5.png){: width="200px" : style="border-radius: 10px"}
+<img src="./20196014/img/img_5.png" width="300px" style="border-radius: 10px;">
