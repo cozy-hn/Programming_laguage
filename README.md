@@ -1,5 +1,6 @@
 # Principles of Programming Languages Fall, 2023
 ## Programming Assignment #1
+<p align="right"> 20196014 고지흔 </p>
 
 <hr>
 
@@ -32,7 +33,7 @@
 <hr>
 
 ### How to use
-* Option A
+**Option A**
 ```
 python3 ./src/main.py
 or
@@ -46,7 +47,7 @@ python ./src/main.py
 “ID: {개수}; CONST: {개수}; OP: {개수};” 
 “파싱 결과 (OK), (WARNING), (ERROR)” 
 “Result ==> {변수 1}: {최종값}; {변수 2}: {최종값}; {변수 3}: {결과값};”  
-* Option B
+**Option B**
 ```
 python3 ./src/main.py -v [textfile name]
 or
@@ -66,14 +67,24 @@ next_token 변수가 변경될 때마다 그 값을 출력한다.
 ### Implementations
 <br>
 
+#### Program Execution Message
+```
+python3 ./src/main.py
+python3 ./src/main.py -v
+```
+<p float="left">
+  <img src=".\20196014\img\img_6.png" width="200" />
+  <img src=".\20196014\img\img_7.png" width="200" />
+</p>
+
+
 #### Argument Handling
-<br>
 
 **No Argument**
 - Exits the program
 ```
-python3 ./src/main.py
-python3 ./src/main.py -v
+python3 ./src/main.py ./test/test1.txt
+python3 ./src/main.py -v ./test/test1.txt
 ```
 <img src="./20196014/img/img_1.png" width="500px">
 
