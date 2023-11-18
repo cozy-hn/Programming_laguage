@@ -75,7 +75,7 @@ next_token 변수가 변경될 때마다 그 값을 출력한다.
 python3 ./src/main.py
 python3 ./src/main.py -v
 ```
-![Argument_img](./img/img_1.png){: width="400px" : style="border-radius: 5px"}
+![Argument_img](./20196014/img/img_1.png){: width="400px" : style="border-radius: 5px"}
 
 
 **Multi Argument**
@@ -84,7 +84,7 @@ python3 ./src/main.py -v
 python3 ./src/main.py ./test/test1.txt ./test/test2.txt
 python3 ./src/main.py -v ./test/test1.txt ./test/test2.txt
 ```
-![Argument_img](./img/img_2.png){: width="500px" : style="border-radius: 5px"}
+![Argument_img](./20196014/img/img_2.png){: width="500px" : style="border-radius: 5px"}
 
 **Non-existent File**
 - Exits the program
@@ -92,7 +92,7 @@ python3 ./src/main.py -v ./test/test1.txt ./test/test2.txt
 python3 ./src/main.py Notexist
 python3 ./src/main.py -v Notexist
 ```
-![Argument_img](./img/img_3.png){: width="500px" : style="border-radius: 5px"}
+![Argument_img](./20196014/img/img_3.png){: width="500px" : style="border-radius: 5px"}
 
 **No Read Permission**
 - Exits the program
@@ -101,7 +101,7 @@ chmod 000 ./test/test1.txt
 python3 ./src/main.py ./test/test1.txt
 python3 ./src/main.py -v ./test/test1.txt
 ```
-![Argument_img](./img/img_4.png){: width="500px" : style="border-radius: 5px"}
+![Argument_img](./20196014/img/img_4.png){: width="500px" : style="border-radius: 5px"}
 
 
 
@@ -115,4 +115,4 @@ operand1 := 3 ;
 operand2 := operand1 + 2 ;
 target := operand1 + operand2 * 3
 ```
-![test_1](./img/img_5.png){: width="300px" : style="border-radius: 10px"}
+![test_1](./20196014/img/img_5.png){: width="300px" : style="border-radius: 10px"}
