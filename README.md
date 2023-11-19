@@ -32,6 +32,18 @@
 ```
 <hr>
 
+### Development Environment
+```
+Mac
+python3 --version
+Python 3.8.2
+```
+```
+Window
+python --version
+Python 3.10.5
+```
+
 ### How to use
 **Option A**
 ```
@@ -193,3 +205,70 @@ target := operand1 + operand2 *
 ```
 <img src="./20196014/img/img_12.png" width="400px">
 
+**입력 #7 예외처리_4**
+* ':=' 대신 ':'만 입력시 할당 연산자 오타로 간주 => 오타 수정
+* ':=' 대신 '=:' 입력시 할당 연산자 오타로 간주 => 오타 수정
+* '=' 입력시 할당 연산자 오타가 아닌 특수문자로 생각 => 할당 연산자 나올 때까지 토큰 생략
+```
+python3 ./src/main.py ./test/test7.txt
+```
+```
+operand1 : 3 ;
+operand2 =: operand1 + 2 ;
+target = operand2 * 3
+```
+<img src="./20196014/img/img_13.png" width="400px">
+
+**입력 #8 예외처리_5**
+* Left Parenthesis가 더 많을 경우 Warning message 출력 후 맨 마지막에 Right Parenthesis 추가
+* Right Parenthesis가 더 많을 경우 Warning message 출력 후 무시
+```
+python3 ./src/main.py ./test/test8.txt
+```
+
+```
+operand1 := (3) ;
+operand2 := ((operand1 + 2 ;
+target := (operand1)) + operand2)) * 3)
+```
+<img src="./20196014/img/img_14.png" width="400px">
+
+**입력 #9 예외처리_6**
+* 같은 연산자 토큰이 연속으로 나올 경우 중복된 연산자라는 Warning message 출력 후 무시
+* 다른 연산자 토큰이 연속으로 나올 경우 존재해서 안되는 토큰이라는 Warning message 출력 후 무시
+```
+python3 ./src/main.py ./test/test9.txt
+```
+
+```
+operand1 := := 1;
+operand2 := (operand1 **/ 3) + 2 ;
+target := operand1 +-+- operand2 *+ 3
+```
+<img src="./20196014/img/img_15.png" width="400px">
+
+**입력 #10 예외처리_7**
+* 문법에 맞지 않는 토큰이 있을 경우 예상 토큰을 Warning message 출력 후 무시
+```
+python3 ./src/main.py ./test/test10.txt
+```
+```
+123 operand1 + oper := 1;
+operand2 := (operand1 oper * 3 2 oper2 ) + 2 4242 ;
+target := * operand1 zeus oner
+```
+<img src="./20196014/img/img_16.png" width="440px">
+
+
+**입력 #11 예외처리_8**
+* ident가 없는 경우 Error message 출력
+* 0으로 나누는 경우 Error message 출력 후 unknown으로 할당
+```
+python3 ./src/main.py ./test/test11.txt
+```
+```
+:= 1;
+operand2 := (4242 / 0) + 2 ;
+target := operand2 * 3
+```
+<img src="./20196014/img/img_17.png" width="440px">
