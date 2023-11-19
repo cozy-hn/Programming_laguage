@@ -185,6 +185,7 @@ class FT_Parser:
             print_f("Result ==> ", end="")
             if not self.ident_table:
                 print_f("None")
+            self.ident_table = list(set(self.ident_table))
             self.ident_table.sort()
             for i in self.ident_table[:-1]:
                 print_f(f"{i}: {self.ident_dict[i]}; ", end="")

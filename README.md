@@ -47,9 +47,9 @@ Python 3.10.5
 ### How to use
 **Option A**
 ```
-python3 ./src/main.py
+python3 ./src/main.py [textfile name]
 or
-python ./src/main.py
+python ./src/main.py [textfile name]
 ```
 ※ 출력-(a): 주어진 문법에 따라 입력파일에 저장되어 있는 프로그램을 분석한다. 
 파싱(parsing)되는 과정을 <처리 예>와 같이 출력하고, 문법 오류 없이 파싱된 경우, 파싱 
@@ -272,3 +272,288 @@ operand2 := (4242 / 0) + 2 ;
 target := operand2 * 3
 ```
 <img src="./20196014/img/img_17.png" width="440px">
+
+
+
+**입력 #12 Random**
+```
+python3 ./src/main.py ./test/random.txt
+```
+```
+sdfhsihlogvd890t8rt54w%%$^*#(&*)(_)_+&(&^&W$%$%@^%^_%%)$_%)#$_^(W_H_FGJOSDgfjadbhljLSjlkvF:F"H:"<{><P>P}MN{GF{NCBDGdG:::SDF:SG:DKBSGSG:;
+''ds'gvlkdfojtwer,.snf23[5095956-5ye/*2/*542/4*bs0vu09xu=fe0w9r3453995809</P>{}})rogjpet2wr3wrw:=efwrogpjvpoej234154389t74t4t4jh5kk32jbndsivusdtuw9t
+gjiwrogjipsvs;;;sdf;sdf;sd;fs;g;;we;;5324;;54;3t:=;;dsfd;g;df;gd;g;e;t4;52==23;=23;5467;9;0;;():():():(:)()(:)9;090;9;09;0;thjeijpsdfsd
+```
+*output*
+```
+          ###########################
+          #  LL Parser를 실행합니다 #
+          # option (a)를 실행합니다 #
+          ###########################
+
+sdfhsihlogvd890t8rt54w := FH; 
+ID: 2; CONST: 0; OP: 0;
+(Warning): Undefined token: '%'가 제거되었습니다.
+(Warning): Undefined token: '%'가 제거되었습니다.
+(Warning): Undefined token: '$'가 제거되었습니다.
+(Warning): Undefined token: '^'가 제거되었습니다.
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.MULT_OP => * 생략
+(Warning): Undefined token: '#'가 제거되었습니다.
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.LEFT_PAREN => ( 생략
+(Warning): Undefined token: '&'가 제거되었습니다.
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.MULT_OP => * 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.RIGHT_PAREN => ) 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.LEFT_PAREN => ( 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.IDENT => _ 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.RIGHT_PAREN => ) 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.IDENT => _ 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.ADD_OP => + 생략
+(Warning): Undefined token: '&'가 제거되었습니다.
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.LEFT_PAREN => ( 생략
+(Warning): Undefined token: '&'가 제거되었습니다.
+(Warning): Undefined token: '^'가 제거되었습니다.
+(Warning): Undefined token: '&'가 제거되었습니다.
+(Warning): Undefined token: '$'가 제거되었습니다.
+(Warning): Undefined token: '%'가 제거되었습니다.
+(Warning): Undefined token: '$'가 제거되었습니다.
+(Warning): Undefined token: '%'가 제거되었습니다.
+(Warning): Undefined token: '@'가 제거되었습니다.
+(Warning): Undefined token: '^'가 제거되었습니다.
+(Warning): Undefined token: '%'가 제거되었습니다.
+(Warning): Undefined token: '^'가 제거되었습니다.
+(Warning): Undefined token: '%'가 제거되었습니다.
+(Warning): Undefined token: '%'가 제거되었습니다.
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.IDENT => W_ 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.RIGHT_PAREN => ) 생략
+(Warning): Undefined token: '$'가 제거되었습니다.
+(Warning): Undefined token: '%'가 제거되었습니다.
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.IDENT => _ 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.RIGHT_PAREN => ) 생략
+(Warning): Undefined token: '#'가 제거되었습니다.
+(Warning): Undefined token: '$'가 제거되었습니다.
+(Warning): Undefined token: '^'가 제거되었습니다.
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.IDENT => _ 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.LEFT_PAREN => ( 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.IDENT => W_H_FGJOSDgfjadbhljLSjlkvF 생략
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): Undefined token: '"'가 제거되었습니다.
+(Warning): Undefined token: '"'가 제거되었습니다.
+(Warning): Undefined token: '<'가 제거되었습니다.
+(Warning): Undefined token: '{'가 제거되었습니다.
+(Warning): Undefined token: '>'가 제거되었습니다.
+(Warning): Undefined token: '<'가 제거되었습니다.
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): 잘못된 토큰 타입, 현재 TokenType.ASSIGNMENT_OP => := 생략
+(Warning): Undefined token: '>'가 제거되었습니다.
+(Warning): Undefined token: '}'가 제거되었습니다.
+(Warning): Undefined token: '{'가 제거되었습니다.
+(Warning): Undefined token: '{'가 제거되었습니다.
+(Warning): 잘못된 토큰 타입, 현재 TokenType.IDENT => PPMNGFNCBDGdG 생략
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): 잘못된 토큰 타입, 현재 TokenType.ASSIGNMENT_OP => := 생략
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): 잘못된 토큰 타입, 현재 TokenType.ASSIGNMENT_OP => := 생략
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): 잘못된 토큰 타입, 현재 TokenType.ASSIGNMENT_OP => := 생략
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): 잘못된 토큰 타입, 현재 TokenType.ASSIGNMENT_OP => := 생략
+(Warning): 잘못된 토큰 타입, 현재 TokenType.IDENT => SDF 생략
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): 잘못된 토큰 타입, 현재 TokenType.ASSIGNMENT_OP => := 생략
+(Warning): 잘못된 토큰 타입, 현재 TokenType.IDENT => SG 생략
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): 잘못된 토큰 타입, 현재 TokenType.ASSIGNMENT_OP => := 생략
+(Warning): 잘못된 토큰 타입, 현재 TokenType.IDENT => DKBSGSG 생략
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): 잘못된 토큰 타입, 현재 TokenType.ASSIGNMENT_OP => := 생략
+(Error): "정의되지 않은 변수(FH)가 참조됨"
+dsgvlkdfojtwersnf235095956 := efwrogpjvpoej234154389t74t4t4jh5kk32jbndsivusdtuw9t; 
+ID: 2; CONST: 0; OP: 0;
+(Warning): Undefined token: '''가 제거되었습니다.
+(Warning): Undefined token: '''가 제거되었습니다.
+(Warning): Undefined token: '''가 제거되었습니다.
+(Warning): Undefined token: ','가 제거되었습니다.
+(Warning): Undefined token: '.'가 제거되었습니다.
+(Warning): Undefined token: '['가 제거되었습니다.
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.ADD_OP => - 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.CONST => 5 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.IDENT => ye 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.MULT_OP => / 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.MULT_OP => * 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.CONST => 2 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.MULT_OP => / 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.MULT_OP => * 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.CONST => 542 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.MULT_OP => / 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.CONST => 4 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.MULT_OP => * 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.IDENT => bs0vu09xu 생략
+(Warning): Undefined token: '='가 제거되었습니다.
+(Warning): Undefined token: '<'가 제거되었습니다.
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.IDENT => fe0w9r3453995809 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.MULT_OP => / 생략
+(Warning): Undefined token: '>'가 제거되었습니다.
+(Warning): Undefined token: '{'가 제거되었습니다.
+(Warning): Undefined token: '}'가 제거되었습니다.
+(Warning): Undefined token: '}'가 제거되었습니다.
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.IDENT => P 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.RIGHT_PAREN => ) 생략
+(Warning): 예상 TokenType.ASSIGNMENT_OP, 현재 TokenType.IDENT => rogjpet2wr3wrw 생략
+(Warning): 잘못된 토큰 타입, 현재 TokenType.IDENT => gjiwrogjipsvs 생략
+(Error): "정의되지 않은 변수(efwrogpjvpoej234154389t74t4t4jh5kk32jbndsivusdtuw9t)가 참조됨"
+; 
+ID: 0; CONST: 0; OP: 0;
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+sdf; 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+sdf; 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+sd; 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+fs; 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+g; 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+we; 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 5324 생략
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 54 생략
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+t :=; 
+ID: 1; CONST: 0; OP: 0;
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 3 생략
+(Error): Error : 연산이 완료되지 않았습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+dsfd; 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+g; 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+df; 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+gd; 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+g; 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+e; 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+t4; 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 52 생략
+(Warning): Undefined token: '='가 제거되었습니다.
+(Warning): Undefined token: '='가 제거되었습니다.
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 23 생략
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Warning): Undefined token: '='가 제거되었습니다.
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 23 생략
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 5467 생략
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 9 생략
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 0 생략
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.LEFT_PAREN => ( 생략
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.RIGHT_PAREN => ) 생략
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.ASSIGNMENT_OP => := 생략
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.LEFT_PAREN => ( 생략
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.RIGHT_PAREN => ) 생략
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.ASSIGNMENT_OP => := 생략
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.LEFT_PAREN => ( 생략
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.RIGHT_PAREN => ) 생략
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.ASSIGNMENT_OP => := 생략
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.LEFT_PAREN => ( 생략
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.ASSIGNMENT_OP => := 생략
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.RIGHT_PAREN => ) 생략
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.LEFT_PAREN => ( 생략
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.RIGHT_PAREN => ) 생략
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.LEFT_PAREN => ( 생략
+(Warning): 오타 수정 : ':'가 ':='로 변경되었습니다.
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.ASSIGNMENT_OP => := 생략
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.RIGHT_PAREN => ) 생략
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 9 생략
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 090 생략
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 9 생략
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 09 생략
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+; 
+ID: 0; CONST: 0; OP: 0;
+(Warning): 예상 TokenType.IDENT, 현재 TokenType.CONST => 0 생략
+(Error): Error : IDENT가 없어 문법에 맞지 않습니다
+thjeijpsdfsd 
+ID: 1; CONST: 0; OP: 0;
+(Error): Error : ASSIGNMENT_OP가 없어 문법에 맞지 않습니다
+Result ==> FH: Unknown; df: Unknown; dsfd: Unknown; dsgvlkdfojtwersnf235095956: Unknown; e: Unknown; efwrogpjvpoej234154389t74t4t4jh5kk32jbndsivusdtuw9t: Unknown; fs: Unknown; g: Unknown; gd: Unknown; sd: Unknown; sdf: Unknown; sdfhsihlogvd890t8rt54w: Unknown; t: Unknown; t4: Unknown; thjeijpsdfsd: Unknown; we: Unknown
+```
+
+**입력 #13 -v Option**
+* -v 옵션을 주면 파싱되는 과정을 출력하지 않음
+* 문장이 바뀌면 빈 줄 하나를 출력
+```
+python3 ./src/main.py -v ./test/test1.txt
+```
+```
+operand1 := 3 ;
+operand2 := operand1 + 2 ;
+target := operand1 + operand2 * 3
+```
+<img src="./20196014/img/img_18.png" width="400px">
