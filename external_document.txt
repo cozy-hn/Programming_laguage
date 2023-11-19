@@ -1,0 +1,26 @@
+###########################################
+Development Environment
+
+Mac
+python3 --version
+Python 3.8.2
+
+Window
+python --version
+Python 3.10.5
+###########################################
+
+
+###########################################
+How to use
+
+Option A
+python3 ./src/main.py [textfile name]
+or
+python ./src/main.py [textfile name]
+
+Option B
+python3 ./src/main.py -v [textfile name]
+or
+python ./src/main.py -v [textfile name]
+###########################################

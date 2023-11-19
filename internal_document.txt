@@ -1,0 +1,26 @@
+main.py
+- LL parser 실행
+
+ctl_input.py
+- 인자 확인 & 인자 오류 처리
+- 옵션 확인
+- txt파일 read
+
+token.py
+-enum으로 토큰 타입 정의
+
+lexical_analyzer.py
+-lexical을 통해 토큰 저장 및 토큰 오류처리
+-next_token과 token_string 저장
+
+ft_parser.py
+-Grammar에 맞는 구조로 재귀하강파싱 진행
+-파싱과 동시에 연산, 할당, 오류처리, 출력 진행
+
+ctl_error.py
+-lexical_analyzer와 ft_parser가 싱글톤을 통해 같은 ctl_error 객체를 가지고 있음
+-에러 메세지 저장 및 출력
+
+########################
+#  구현 세부 사항 Readme  #
+########################
